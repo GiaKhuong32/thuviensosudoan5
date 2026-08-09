@@ -1,8 +1,12 @@
 function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <h1 className="text-2xl font-bold text-primary">Thư Viện Số Sư Đoàn 5</h1>
-    </div>
+    <section>
+      <h1 className="text-2xl font-bold text-gray-900">Trang chủ</h1>
+
+      <p className="mt-2 text-sm text-gray-600">
+        Chào mừng bạn đến với Thư Viện Số Sư Đoàn 5.
+      </p>
+    </section>
   );
 }
 
