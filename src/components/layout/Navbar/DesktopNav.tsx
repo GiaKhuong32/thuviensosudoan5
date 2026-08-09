@@ -4,41 +4,52 @@ import { FiChevronDown } from "react-icons/fi";
 
 import { navItems } from "./nav-items";
 
-interface NavbarProps {
+interface DesktopNavProps {
   compact?: boolean;
 }
 
-function Navbar({ compact = false }: NavbarProps) {
+const linkBase =
+  "relative whitespace-nowrap py-4 text-sm font-semibold tracking-wide transition-colors";
+
+const underline =
+  "after:absolute after:inset-x-0 after:bottom-2 after:h-0.5 after:bg-white after:transition-transform";
+
+function DesktopNav({ compact = false }: DesktopNavProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <div className="relative">
-      <nav className="mx-auto hidden max-w-screen-2xl items-center justify-center gap-5 px-4 md:px-8 xl:flex 2xl:gap-6">
-        <NavLink
-          to="/"
-          className={[
-            "flex shrink-0 items-center gap-2 overflow-hidden",
-            "transition-all duration-300",
-            compact
-              ? "mr-4 max-w-xs translate-x-0 opacity-100"
-              : "pointer-events-none mr-0 max-w-0 -translate-x-4 opacity-0",
-          ].join(" ")}
-        >
-          <span
-            className={[
-              "flex shrink-0 items-center justify-center rounded-full bg-primary",
-              "transition-all duration-300",
-              compact ? "h-9 w-9" : "h-9 w-0",
-            ].join(" ")}
-          >
-            <img
-              src="@/assets/images/logos/logo.png"
-              alt="Logo"
-              className="h-5 w-5"
-            />
+      <div
+        aria-hidden={!compact}
+        className={[
+          "absolute inset-0 z-10 mx-auto flex max-w-screen-2xl",
+          "items-center gap-3 px-4 transition-all duration-300 ease-out md:px-8",
+          compact
+            ? "translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-2 opacity-0",
+        ].join(" ")}
+      >
+        <NavLink to="/" className="flex shrink-0 items-center gap-2">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary">
+            <img src="/logo.png" alt="Logo" className="h-5 w-5" />
+          </span>
+
+          <span className="whitespace-nowrap text-lg font-bold tracking-wide text-slate-700">
+            Sư đoàn 5
           </span>
         </NavLink>
+      </div>
 
+      <nav
+        className={[
+          "mx-auto hidden max-w-screen-2xl items-center justify-center",
+          "gap-5 px-4 transition-all duration-300 ease-out md:px-8",
+          "xl:flex 2xl:gap-6",
+          compact
+            ? "pointer-events-none translate-y-2 opacity-0"
+            : "translate-y-0 opacity-100",
+        ].join(" ")}
+      >
         {navItems.map((item, index) => {
           if (item.children) {
             const isOpen = openIndex === index;
@@ -55,11 +66,10 @@ function Navbar({ compact = false }: NavbarProps) {
                   aria-expanded={isOpen}
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   className={[
-                    "relative flex items-center gap-1 whitespace-nowrap py-4",
-                    "text-sm font-semibold tracking-wide",
-                    "text-white transition-colors hover:text-white/80",
-                    "after:absolute after:inset-x-0 after:bottom-2 after:h-0.5",
-                    "after:bg-white after:origin-center after:transition-transform",
+                    linkBase,
+                    underline,
+                    "flex items-center gap-1",
+                    "text-white hover:text-white/80",
                     isOpen ? "after:scale-x-100" : "after:scale-x-0",
                   ].join(" ")}
                 >
@@ -67,7 +77,7 @@ function Navbar({ compact = false }: NavbarProps) {
 
                   <FiChevronDown
                     className={[
-                      "h-4 w-4 transition-transform duration-200",
+                      "h-4 w-4 transition-transform",
                       isOpen ? "rotate-180" : "",
                     ].join(" ")}
                   />
@@ -75,9 +85,11 @@ function Navbar({ compact = false }: NavbarProps) {
 
                 <div
                   className={[
-                    "absolute left-1/2 top-full z-50 min-w-[16rem]",
-                    "-translate-x-1/2 rounded-lg border border-slate-200",
-                    "bg-white py-2 shadow-lg transition-all duration-200",
+                    "absolute left-1/2 top-full z-50",
+                    "w-[24rem] -translate-x-1/2",
+                    "rounded-lg border border-slate-200",
+                    "bg-white py-2 shadow-lg",
+                    "transition-all duration-200",
                     isOpen
                       ? "visible translate-y-0 opacity-100"
                       : "invisible -translate-y-1 opacity-0",
@@ -90,8 +102,8 @@ function Navbar({ compact = false }: NavbarProps) {
                       onClick={() => setOpenIndex(null)}
                       className={({ isActive }) =>
                         [
-                          "block px-4 py-3 text-sm font-medium",
-                          "transition-colors",
+                          "block px-4 py-2.5 text-sm font-medium",
+                          "leading-5 transition-colors",
                           isActive
                             ? "bg-primary/10 text-primary"
                             : "text-slate-700 hover:bg-slate-50 hover:text-primary",
@@ -113,11 +125,11 @@ function Navbar({ compact = false }: NavbarProps) {
               end={item.end}
               className={({ isActive }) =>
                 [
-                  "relative whitespace-nowrap py-4 text-sm font-semibold tracking-wide",
-                  "text-white transition-colors hover:text-white/80",
-                  "after:absolute after:inset-x-0 after:bottom-2 after:h-0.5",
-                  "after:bg-white after:origin-center after:transition-transform",
-                  isActive ? "after:scale-x-100" : "after:scale-x-0",
+                  linkBase,
+                  underline,
+                  isActive
+                    ? "text-white after:scale-x-100"
+                    : "text-white hover:text-white/80 after:scale-x-0",
                 ].join(" ")
               }
             >
@@ -130,4 +142,4 @@ function Navbar({ compact = false }: NavbarProps) {
   );
 }
 
-export default Navbar;
+export default DesktopNav;

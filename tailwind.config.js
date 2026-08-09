@@ -4,6 +4,10 @@ export default {
 
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Inter", "Arial", "sans-serif"],
+      },
+      
       colors: {
         primary: {
           DEFAULT: "#007A3F",
