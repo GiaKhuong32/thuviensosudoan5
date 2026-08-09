@@ -1,11 +1,19 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from '@/App.tsx'
-import '@/assets/styles/tailwind.css'
-import '@/assets/styles/global.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import App from "@/App";
+
+import "@/assets/styles/tailwind.css";
+import "@/assets/styles/global.css";
+
+const queryClient = new QueryClient();
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
   </React.StrictMode>,
-)
+);
